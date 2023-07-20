@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <script src="../three.js-r154/build/three.js"></script>
+
+        <script type="importmap">
+            {
+                "imports": {
+                    "three": "../three.js-r154/build/three.module.js",
+              "three/addons/": "../three.js-r154/examples/jsm/"
+                }
+            }
+        </script>
+
+        <script type='module' src="rect_prt.js"></script>
+        <script type="module">
+            import { createScene } from "./rect_prt.js";
+            createScene();
+
+            import { createRect } from "./rect_prt.js";
+            var positions1 = [
+                0, 0, 0,     
+                5,0,0,
+                5,5,0,
+                0,5,0,
+                0,0,220,
+                5,0,220,
+                5,5,220,
+                0,5,220,
+            ];
+
+            var positions2 = [
+                55,0,0,
+                60,0,0,
+                60,5,0,
+                55,5,0,
+                55,0,220,
+                60,0,220,
+                60,5,220,
+                55,5,220,
+            ];
+
+            var positions3 = [
+                55,75,0,
+                60,75,0,
+                60,80,0,
+                55,80,0,
+                55,75,220,
+                60,75,220,
+                60,80,220,
+                55,80,220,
+            ];
+
+            var positions4 = [
+                0,75,0,
+                5,75,0,
+                5,80,0,
+                0,80,0,
+                0,75,220,
+                5,75,220,
+                5,80,220,
+                0,80,220,
+            ]
+
+            var positions5 = [
+                5,0,0,
+                55,0,0,
+                55,5,0,
+                5,5,0,
+                5,0,5,
+                55,0,5,
+                55,5,5,
+                5,5,5,
+            ]
+
+            var positions6 = [
+                55,5,0,
+                60,5,0,
+                60,75,0,
+                55,75,0,
+                55,5,5,
+                60,5,5,
+                60,75,5,
+                55,75,5,
+            ]
+
+            var positions7 = [
+                5,75,0,
+                55,75,0,
+                55,80,0,
+                5,80,0,
+                5,75,5,
+                55,75,5,
+                55,80,5,
+                5,80,5,
+            ]
+
+            var positions8 = [
+                0,5,0,
+                5,5,0,
+                5,75,0,
+                0,75,0,
+                0,5,5,
+                5,5,5,
+                5,75,5,
+                0,75,5,
+            ]
+            createRect(positions1)
+            createRect(positions2)
+            createRect(positions3)
+            createRect(positions4)
+            createRect(positions5)
+            createRect(positions6)
+            createRect(positions7)
+            createRect(positions8)
+
+        </script>
+    </body>
+</html>

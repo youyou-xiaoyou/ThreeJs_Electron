@@ -1,0 +1,15 @@
+{
+  "name": "threejs_electron",
+  "version": "1.0.0",
+  "description": "Automatic routing model of distribution cabinet",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TCP",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^25.3.1"
+  }
+}
