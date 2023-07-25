@@ -70,7 +70,7 @@ export function createScene(){
 export function createRect(positions){
     var material = new THREE.MeshStandardMaterial({
         color: 0xffffff, // 物体的基本颜色
-        metalness: 0.8,    // 金属度，介于 0（非金属）和 1（完全金属）之间
+        metalness: 0.5,    // 金属度，介于 0（非金属）和 1（完全金属）之间
         roughness: 0.5   // 粗糙度，介于 0（光滑）和 1（粗糙）之间
     });
 
