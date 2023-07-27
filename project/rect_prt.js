@@ -2,15 +2,16 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 //初始化场景，相机
 var scene = new THREE.Scene();
+scene.background = new THREE.Color(0xE0E0E0);
 
-export function createScene(){
+export function createScene() {
     //透视投影相机
-    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
 
     //渲染器
-    var renderer = new THREE.WebGLRenderer({ antialias : true } );
-    renderer.setSize(window.innerWidth, window.innerHeight );
-    document.body.appendChild( renderer.domElement );
+    var renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
 
 
     // //点光源：两个参数分别表示光源颜色和光照强度
@@ -18,17 +19,17 @@ export function createScene(){
     // // 参数2：1.0,表示光照强度，可以根据需要调整
     const pointLight1 = new THREE.PointLight(0xffffff, 1.0);
     //点光源位置
-    pointLight1.position.set(300, 100, 100);
-    scene.add(pointLight1); 
+    pointLight1.position.set(1000, 100, 100);
+    scene.add(pointLight1);
 
     const pointLight2 = new THREE.PointLight(0xffffff, 1.0);
     //点光源位置
-    pointLight2.position.set(50, 300, 50);
+    pointLight2.position.set(50, 1000, 50);
     // scene.add(pointLight2); 
 
     const pointLight3 = new THREE.PointLight(0xffffff, 1.0);
     //点光源位置
-    pointLight3.position.set(50, 50, 300);
+    pointLight3.position.set(50, 50, 3000);
     scene.add(pointLight3);
 
     const pointLight4 = new THREE.PointLight(0xffffff, 1.0);
@@ -41,11 +42,11 @@ export function createScene(){
     camera.up.x = 0;
     camera.up.y = 0;
     camera.up.z = 1;
-    camera.position.set(250, 250, 250);
-    camera.lookAt(0,0,0);
+    camera.position.set(1500, 1600, 3000);
+    camera.lookAt(0, 100, 1500);
 
     //辅助观察的坐标系
-    const axesHelper = new THREE.AxesHelper(100);
+    const axesHelper = new THREE.AxesHelper(1000);
     scene.add(axesHelper);
 
     //实现镜头旋转
@@ -59,17 +60,17 @@ export function createScene(){
 
 
     function animate() {
-        requestAnimationFrame( animate );
-        renderer.render( scene, camera );
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
     };
 
     animate();
 }
 
 
-export function createRect(positions){
+export function createRect(positions, material_color = 0xffffff) {
     var material = new THREE.MeshStandardMaterial({
-        color: 0xffffff, // 物体的基本颜色
+        color: material_color, // 物体的基本颜色
         metalness: 0.5,    // 金属度，介于 0（非金属）和 1（完全金属）之间
         roughness: 0.5   // 粗糙度，介于 0（光滑）和 1（粗糙）之间
     });
@@ -97,7 +98,7 @@ export function createRect(positions){
 
 
     geometry.computeVertexNormals();
-    const mesh = new THREE.Mesh( geometry, material );
+    const mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
 
 

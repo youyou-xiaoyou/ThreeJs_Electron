@@ -26,6 +26,10 @@ class Node {
         this.parent = parent;
     }
 
+    //用坐标向量表示当前点指向的方向
+    vector_x = this.parent == null ? 0 : coordinates.x - parent.x;
+    vector_y = this.parent == null ? 0 : coordinates.y - parent.y;
+
     getScore() {
         return this.G + this.H;
     }
@@ -52,7 +56,7 @@ class AStar {
     }
 
     detectCollision(coordinates) {
-        if (coordinates.x < 0 || coordinates.x >= this.worldSize.x 
+        if (coordinates.x < 0 || coordinates.x >= this.worldSize.x
             || coordinates.y < 0 || coordinates.y >= this.worldSize.y) {
             return true;
         }
@@ -63,16 +67,48 @@ class AStar {
         return nodes.find((node) => node.coordinates.isEqual(coordinates));
     }
 
+    setAngle(safeAngle) {
+        this.safeAngle = 180 - safeAngle;
+    }
 
+    checkAngle(current, direction) {
+        if (current.parent == null) return true;
+        let x1 = current.coordinates.x - current.parent.coordinates.x;
+        let y1 = current.coordinates.y - current.parent.coordinates.y;
+        let x2 = direction.x;
+        let y2 = direction.y;
+
+
+        let angle = Math.acos((x1 * x2 + y1 * y2)
+            / (Math.sqrt(x1 * x1 + y1 * y1) * Math.sqrt(x2 * x2 + y2 * y2)))
+            * (180 / Math.PI);
+
+        let final_angle = parseFloat(angle.toFixed(2));
+
+        if (final_angle <= this.safeAngle) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    /**
+     * 
+     * @param {coordinates} source 起点
+     * @param {coordinates} target 终点
+     * @returns 
+     */
     findPath(source, target) {
         const openSet = [];
         const closedSet = [];
         openSet.push(new Node(source));
-        console.log(source);
+
         while (openSet.length > 0) {
             let current = openSet[0];
             let currentIndex = 0;
 
+            //当前最短路径
             for (let i = 0; i < openSet.length; i++) {
                 let node = openSet[i];
                 if (node.getScore() < current.getScore()) {
@@ -81,21 +117,41 @@ class AStar {
                 }
             }
 
+            //保留路径上的必要节点并返回给threejs
             if (current.coordinates.isEqual(target)) {
                 let path = [];
-                while (current !== null) {
-                    path.push(current.coordinates);
+                //先放入终点
+                path.push(current.coordinates);
+                current = current.parent;
+                //遍历剩下非起点的点
+                while (current.parent !== null) {
+                    if (current.vector_x != current.parent.vector_x || current.vector_y != current.parent.vector_y) {
+                        path.push(current.coordinates);
+                        path.push(current.parent.coordinates);
+                        current = current.parent;
+                    }
                     current = current.parent;
                 }
-                return path.reverse();
+                //放入起点
+                path.push(source);
+                path.reverse();
+                //将path转变为数组返回
+                let result = [];
+                for (const item of path) {
+                    result.push([item.x, item.y]);
+                }
+                return result;
             }
 
             openSet.splice(currentIndex, 1);
             closedSet.push(current);
 
             for (let i = 0; i < 8; i++) {
+                if (!this.checkAngle(current, this.direction[i])) {
+                    continue;
+                }
+
                 const newCoordinates = new Vec2i(current.coordinates.x + this.direction[i].x, current.coordinates.y + this.direction[i].y);
-                
                 if (this.detectCollision(newCoordinates) || this.findNodeOnList(closedSet, newCoordinates)) {
                     continue;
                 }
@@ -120,12 +176,11 @@ class AStar {
 
 }
 
-// 示例使用
-const astar = new AStar();
-astar.setWorldSize({ x: 10, y: 10 });
-astar.addCollision(new Vec2i(2, 2));
-astar.addCollision(new Vec2i(2, 3));
-astar.addCollision(new Vec2i(3, 3));
-const path = astar.findPath(new Vec2i(0, 0), new Vec2i(3,4));
-console.log(path);
-console.log("输出完成")
+export function aStarFindPath(world_x, world_y, safeAngle, startPoint, endPoint, passByPoints) {
+    const astar = new AStar();
+    astar.setWorldSize({ x: world_x, y: world_y });
+    astar.setAngle(safeAngle);
+
+    const path = astar.findPath(new Vec2i(startPoint[0], startPoint[1]), new Vec2i(endPoint[0], endPoint[1]));
+    return path;
+}

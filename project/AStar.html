@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>测试AStar</title>
 </head>
+
 <body>
-    <script src="AStar.js"></script>
+    <script type="module" src="AStar.js"></script>
+    <script type="module">
+        import { aStarFindPath } from "./AStar.js";
+        let result = aStarFindPath(800, 2200, 90, [400, 825], [400, 1625], []);
+        console.log(result);
+    </script>
 </body>
