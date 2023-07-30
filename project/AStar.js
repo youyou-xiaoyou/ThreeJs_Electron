@@ -1,3 +1,4 @@
+//构件坐标类
 class Vec2i {
     constructor(x, y) {
         this.x = x;
@@ -9,6 +10,7 @@ class Vec2i {
     }
 }
 
+//使用曼哈顿距离作为启发函数
 function heuristicManhattan(source, target) {
     const delta = {
         x: Math.abs(source.x - target.x),
@@ -17,7 +19,12 @@ function heuristicManhattan(source, target) {
     return (delta.x + delta.y);
 }
 
-
+/*
+    G:起点到当前点距离
+    H:当前点到终点的估算距离
+    cooedinates:坐标
+    parent:上一个父节点
+*/
 class Node {
     constructor(coordinates, parent = null) {
         this.G = 0;
@@ -26,7 +33,7 @@ class Node {
         this.parent = parent;
     }
 
-    //用坐标向量表示当前点指向的方向
+    //用坐标向量表示当前点指向的方向，用于计算夹角
     vector_x = this.parent == null ? 0 : coordinates.x - parent.x;
     vector_y = this.parent == null ? 0 : coordinates.y - parent.y;
 
@@ -55,6 +62,7 @@ class AStar {
         this.obstacles.push(coordinates);
     }
 
+    //检测是否有障碍物
     detectCollision(coordinates) {
         if (coordinates.x < 0 || coordinates.x >= this.worldSize.x
             || coordinates.y < 0 || coordinates.y >= this.worldSize.y) {
@@ -67,10 +75,12 @@ class AStar {
         return nodes.find((node) => node.coordinates.isEqual(coordinates));
     }
 
+    //自定义安全的弯折度数
     setAngle(safeAngle) {
         this.safeAngle = 180 - safeAngle;
     }
 
+    //检测所选路径是大于安全的弯折度数
     checkAngle(current, direction) {
         if (current.parent == null) return true;
         let x1 = current.coordinates.x - current.parent.coordinates.x;
@@ -91,6 +101,10 @@ class AStar {
             return false;
         }
     }
+
+
+    //添加安全距离
+    addSafeDistance(){}
 
 
     /**
@@ -176,6 +190,7 @@ class AStar {
 
 }
 
+//返回路径用于3D建模
 export function aStarFindPath(world_x, world_y, safeAngle, startPoint, endPoint, passByPoints) {
     const astar = new AStar();
     astar.setWorldSize({ x: world_x, y: world_y });

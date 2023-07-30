@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="common-layout">
+        <div class="aside">
+            <h2>>>使用GDD标准柜体(推荐)</h2>
+
+            <span class="text mx-1 large primary">尺寸:800*600*2200</span>
+            <button type="submit" id="standard">导入柜体</button><br><br><br>
+
+            <h2>>>构建柜体(自定义)</h2>
+            <form id="coordinateForm">
+                <span class="text mx-1 large primary">一、柜架名称:</span>
+                <input type="text" id="name" name="name" required><br><br>
+
+                <span class="text mx-1 large primary">二、框架类型:</span>
+                <input type="text" id="type" name="type" required><br><br>
+
+                <span class="text mx-1 large primary">三、柜架描述:</span>
+                <input type="text" id="description" name="description" required><br><br>
+
+                <span class="text mx-1 large primary">四、自定义坐标添加:(采用8点确定独立长方体构件)</span><br>
+
+
+                <label for="p1">坐标1:</label>
+                <input type="text" id="p1" name="p1" required><br>
+
+                <label for="p2">坐标2:</label>
+                <input type="text" id="p2" name="p2" required><br>
+
+                <label for="p3">坐标3:</label>
+                <input type="text" id="p3" name="p3" required><br>
+
+                <label for="p4">坐标4:</label>
+                <input type="text" id="p4" name="p4" required><br>
+
+                <label for="p5">坐标5:</label>
+                <input type="text" id="p5" name="p5" required><br>
+
+                <label for="p6">坐标6:</label>
+                <input type="text" id="p6" name="p6" required><br>
+
+                <label for="p7">坐标7:</label>
+                <input type="text" id="p7" name="p7" required><br>
+
+                <label for="p8">坐标8:</label>
+                <input type="text" id="p8" name="p8" required>
+
+                <button type="submit">创建环境</button>
+                <button type="submit">添加构件</button>
+            </form>
+
+
+            <!-- 选择使用GDD标准柜体后按预先设定的尺寸生成柜体和场景 -->
+            <script>
+                document.getElementById("standard").addEventListener("submit", function (event) {
+                //调用createRect()函数
+                    const positionsArray = [
+                        [
+                            0, 0, 0,
+                            50, 0, 0,
+                            50, 50, 0,
+                            0, 50, 0,
+                            0, 0, 2200,
+                            50, 0, 2200,
+                            50, 50, 2200,
+                            0, 50, 2200,
+                        ],
+
+                        [
+                            550, 0, 0,
+                            600, 0, 0,
+                            600, 50, 0,
+                            550, 50, 0,
+                            550, 0, 2200,
+                            600, 0, 2200,
+                            600, 50, 2200,
+                            550, 50, 2200,
+                        ],
+
+                        [
+                            550, 750, 0,
+                            600, 750, 0,
+                            600, 800, 0,
+                            550, 800, 0,
+                            550, 750, 2200,
+                            600, 750, 2200,
+                            600, 800, 2200,
+                            550, 800, 2200,
+                        ],
+
+                        [
+                            0, 750, 0,
+                            50, 750, 0,
+                            50, 800, 0,
+                            0, 800, 0,
+                            0, 750, 2200,
+                            50, 750, 2200,
+                            50, 800, 2200,
+                            0, 800, 2200,
+                        ],
+
+                        [
+                            50, 0, 0,
+                            550, 0, 0,
+                            550, 50, 0,
+                            50, 50, 0,
+                            50, 0, 50,
+                            550, 0, 50,
+                            550, 50, 50,
+                            50, 50, 50,
+                        ],
+
+                        [
+                            550, 50, 0,
+                            600, 50, 0,
+                            600, 750, 0,
+                            550, 750, 0,
+                            550, 50, 50,
+                            600, 50, 50,
+                            600, 750, 50,
+                            550, 750, 50,
+                        ],
+
+                        [
+                            50, 750, 0,
+                            550, 750, 0,
+                            550, 800, 0,
+                            50, 800, 0,
+                            50, 750, 50,
+                            550, 750, 50,
+                            550, 800, 50,
+                            50, 800, 50,
+                        ],
+
+                        [
+                            0, 50, 0,
+                            50, 50, 0,
+                            50, 750, 0,
+                            0, 750, 0,
+                            0, 50, 50,
+                            50, 50, 50,
+                            50, 750, 50,
+                            0, 750, 50,
+                        ],
+
+                        [
+                            50, 0, 2150,
+                            550, 0, 2150,
+                            550, 50, 2150,
+                            50, 50, 2150,
+                            50, 0, 2200,
+                            550, 0, 2200,
+                            550, 50, 2200,
+                            50, 50, 2200,
+                        ],
+
+                        [
+                            550, 50, 2150,
+                            600, 50, 2150,
+                            600, 750, 2150,
+                            550, 750, 2150,
+                            550, 50, 2200,
+                            600, 50, 2200,
+                            600, 750, 2200,
+                            550, 750, 2200,
+                        ],
+
+                        [
+                            50, 750, 2150,
+                            550, 750, 2150,
+                            550, 800, 2150,
+                            50, 800, 2150,
+                            50, 750, 2200,
+                            550, 750, 2200,
+                            550, 800, 2200,
+                            50, 800, 2200,
+                        ],
+
+                        [
+                            0, 50, 2150,
+                            50, 50, 2150,
+                            50, 750, 2150,
+                            0, 750, 2150,
+                            0, 50, 2200,
+                            50, 50, 2200,
+                            50, 750, 2200,
+                            0, 750, 2200,
+                        ],
+
+                        [
+                            200, 0, 50,
+                            250, 0, 50,
+                            250, 50, 50,
+                            200, 50, 50,
+                            200, 0, 2150,
+                            250, 0, 2150,
+                            250, 50, 2150,
+                            200, 50, 2150,
+                        ],
+
+                        [
+                            200, 750, 50,
+                            250, 750, 50,
+                            250, 800, 50,
+                            200, 800, 50,
+                            200, 750, 2150,
+                            250, 750, 2150,
+                            250, 800, 2150,
+                            200, 800, 2150,
+                        ],
+
+                        [
+                            200, 50, 800,
+                            250, 50, 800,
+                            250, 750, 800,
+                            200, 750, 800,
+                            200, 50, 850,
+                            250, 50, 850,
+                            250, 750, 850,
+                            200, 750, 850,
+                        ],
+
+                        [
+                            200, 50, 1600,
+                            250, 50, 1600,
+                            250, 750, 1600,
+                            200, 750, 1600,
+                            200, 50, 1650,
+                            250, 50, 1650,
+                            250, 750, 1650,
+                            200, 750, 1650,
+                        ]
+                    ]
+                    event.preventDefault(); // 阻止表单默认提交行为
+                });
+            </script>
+
+
+            <!-- 在自定义柜体中接收用户输入的坐标 -->
+            <script>
+                document.getElementById("coordinateForm").addEventListener("submit", function (event) {
+                    event.preventDefault(); 
+
+                    // 获取表单中的输入值并拆分为坐标字符串
+                    var p1String = document.getElementById("p1").value;
+                    var p2String = document.getElementById("p2").value;
+                    var p3String = document.getElementById("p3").value;
+                    var p4String = document.getElementById("p4").value;
+                    var p5String = document.getElementById("p5").value;
+                    var p6String = document.getElementById("p6").value;
+                    var p7String = document.getElementById("p7").value;
+                    var p8String = document.getElementById("p8").value;
+
+                    // 解析坐标字符串并转换为浮点数
+                    var p1Coords = p1String.substring(1, p1String.length - 1).split(',').map(parseFloat);
+                    var p2Coords = p2String.substring(1, p2String.length - 1).split(',').map(parseFloat);
+                    var p3Coords = p3String.substring(1, p3String.length - 1).split(',').map(parseFloat);
+                    var p4Coords = p4String.substring(1, p4String.length - 1).split(',').map(parseFloat);
+                    var p5Coords = p5String.substring(1, p5String.length - 1).split(',').map(parseFloat);
+                    var p6Coords = p6String.substring(1, p6String.length - 1).split(',').map(parseFloat);
+                    var p7Coords = p7String.substring(1, p7String.length - 1).split(',').map(parseFloat);
+                    var p8Coords = p8String.substring(1, p8String.length - 1).split(',').map(parseFloat);
+
+                    // 创建坐标数组
+                    var positionsArray = [p1Coords, p2Coords, p3Coords, p4Coords, p5Coords, p6Coords, p7Coords, p8Coords];
+
+                });
+            </script>
+        </div>
+
+
+        <div class="main">
+            <h2>>>构建路径</h2>
+            <label for="p1">钣金横截面尺寸：</label>
+            <input type="text" id="material_size" name="material_size" required><br><br>
+
+            <label for="p1">起点:</label>
+            <input type="text" id="start" name="start" required><br><br>
+
+            <label for="p1">终点:</label>
+            <input type="text" id="end" name="end" required><br><br>
+
+            <label for="p1">途径点:</label>
+            <input type="text" id="crossByPoint" name="crossByPoint" required><br><br>
+
+            <h2>>>生成模型</h2>
+            <button onclick="window.location.href='./createRect.html'" type="button" id="add">生成模型</button><br><br>
+
+            <h2>———————————————</h2>
+            <h2>>>模型测试</h2>
+            <span class="text large primary">使用前建议先使用模型测试检测软件是否正常运行</span><br>
+            <button onclick="window.location.href='./createRect.html'" type="button" id="add">模型测试</button>
+
+        </div>
+
+    </div>
+</body>
+
+</html>

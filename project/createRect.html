@@ -20,9 +20,11 @@
     <script type='module' src="rect_prt.js"></script>
     <script type="module" src="AStar.js"></script>
     <script type="module">
+        //构建场景
         import { createScene } from "./rect_prt.js";
         createScene();
 
+        //调用createRect添加长方体构件
         import { createRect } from "./rect_prt.js";
         var position1 = [
             0, 0, 0,
@@ -216,12 +218,22 @@
         createRect(position15)
         createRect(position16)
 
-        //在模型中添加钣金路径
+        //根据起点，终点，途径点生成路径
         import { aStarFindPath } from "./AStar.js";
+        //将三维路径投射到二维，这里选择x = 250的平面，不同情况下选择的投影面不同
         let x = 250;
+
+        //path[]接收Astar算法返回的路径转折点
         let path = new Array();
+        /* 
+            aStarFindPath(world_x, world_y, safeAngle, startPoint, endPoint, passByPoints)
+            world_x,world_y:将整个柜体投影到x = 250得到的边界尺寸
+            safeAngle:自定义安全的弯折度数
+            startPoint, endPoint, passByPoints:起点，终点，途径点
+        */
         path = aStarFindPath(800, 2200, 90, [400, 825], [400, 1625], []);
 
+        //按照一定算法将二维坐标换算成三维坐标
         let y1 = path[0][0], z1 = path[0][1], y2 = path[1][0], z2 = path[1][1];
 
         let path1 = [

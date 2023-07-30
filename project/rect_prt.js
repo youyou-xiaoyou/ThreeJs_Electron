@@ -4,6 +4,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 var scene = new THREE.Scene();
 scene.background = new THREE.Color(0xE0E0E0);
 
+//创建场景
 export function createScene() {
     //透视投影相机
     var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
@@ -68,6 +69,7 @@ export function createScene() {
 }
 
 
+//创建长方体构件
 export function createRect(positions, material_color = 0xffffff) {
     var material = new THREE.MeshStandardMaterial({
         color: material_color, // 物体的基本颜色
