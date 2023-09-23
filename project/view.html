@@ -12,7 +12,7 @@
             <h2>>>使用GDD标准柜体(推荐)</h2>
 
             <span class="text mx-1 large primary">尺寸:800*600*2200</span>
-            <button type="submit" id="standard">导入柜体</button><br><br><br>
+            <button id="useDefault">导入柜体</button><br><br><br>
 
             <h2>>>构建柜体(自定义)</h2>
             <form id="coordinateForm">
@@ -59,7 +59,7 @@
 
             <!-- 选择使用GDD标准柜体后按预先设定的尺寸生成柜体和场景 -->
             <script>
-                document.getElementById("standard").addEventListener("submit", function (event) {
+                document.getElementById("useDefault").addEventListener("click", function (event) {
                 //调用createRect()函数
                     const positionsArray = [
                         [
@@ -238,7 +238,6 @@
                             200, 750, 1650,
                         ]
                     ]
-                    event.preventDefault(); // 阻止表单默认提交行为
                 });
             </script>
 

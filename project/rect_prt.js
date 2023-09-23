@@ -7,11 +7,14 @@ scene.background = new THREE.Color(0xE0E0E0);
 //创建场景
 export function createScene() {
     //透视投影相机
-    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
+    // var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
+    var camera = new THREE.PerspectiveCamera(75, 300 / 500, 0.1, 5000);
+    
 
     //渲染器
     var renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    // renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(300,500);
     document.body.appendChild(renderer.domElement);
 
 

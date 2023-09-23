@@ -31,11 +31,12 @@ class Node {
         this.H = 0;
         this.coordinates = coordinates;
         this.parent = parent;
+        //用坐标向量表示当前点指向的方向，用于计算夹角
+        this.vector_x = parent == null ? 0 : coordinates.x - parent.coordinates.x;
+        this.vector_y = parent == null ? 0 : coordinates.y - parent.coordinates.y;
+
     }
 
-    //用坐标向量表示当前点指向的方向，用于计算夹角
-    vector_x = this.parent == null ? 0 : coordinates.x - parent.x;
-    vector_y = this.parent == null ? 0 : coordinates.y - parent.y;
 
     getScore() {
         return this.G + this.H;
@@ -104,7 +105,7 @@ class AStar {
 
 
     //添加安全距离
-    addSafeDistance(){}
+    addSafeDistance() { }
 
 
     /**
@@ -116,7 +117,8 @@ class AStar {
     findPath(source, target) {
         const openSet = [];
         const closedSet = [];
-        openSet.push(new Node(source));
+        // var NULL_ = new Node(null,null);
+        openSet.push(new Node(source,null));
 
         while (openSet.length > 0) {
             let current = openSet[0];
@@ -138,7 +140,7 @@ class AStar {
                 path.push(current.coordinates);
                 current = current.parent;
                 //遍历剩下非起点的点
-                while (current.parent !== null) {
+                while (current !== null) {
                     if (current.vector_x != current.parent.vector_x || current.vector_y != current.parent.vector_y) {
                         path.push(current.coordinates);
                         path.push(current.parent.coordinates);
@@ -146,8 +148,6 @@ class AStar {
                     }
                     current = current.parent;
                 }
-                //放入起点
-                path.push(source);
                 path.reverse();
                 //将path转变为数组返回
                 let result = [];
@@ -191,7 +191,7 @@ class AStar {
 }
 
 //返回路径用于3D建模
-export function aStarFindPath(world_x, world_y, safeAngle, startPoint, endPoint, passByPoints) {
+export function aStarFindPath(world_x, world_y, safeAngle, startPoint, endPoint) {
     const astar = new AStar();
     astar.setWorldSize({ x: world_x, y: world_y });
     astar.setAngle(safeAngle);

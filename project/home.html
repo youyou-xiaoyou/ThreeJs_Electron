@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        var frame_x = 800, frame_y = 600, frame_z = 2200;
+        var positions = [[
+            0, 0, 0,
+            50, 0, 0,
+            50, 50, 0,
+            0, 50, 0,
+            0, 0, 2200,
+            50, 0, 2200,
+            50, 50, 2200,
+            0, 50, 2200,
+        ],
+
+        [
+            550, 0, 0,
+            600, 0, 0,
+            600, 50, 0,
+            550, 50, 0,
+            550, 0, 2200,
+            600, 0, 2200,
+            600, 50, 2200,
+            550, 50, 2200,
+        ],
+
+        [
+            550, 750, 0,
+            600, 750, 0,
+            600, 800, 0,
+            550, 800, 0,
+            550, 750, 2200,
+            600, 750, 2200,
+            600, 800, 2200,
+            550, 800, 2200,
+        ],
+
+        [
+            0, 750, 0,
+            50, 750, 0,
+            50, 800, 0,
+            0, 800, 0,
+            0, 750, 2200,
+            50, 750, 2200,
+            50, 800, 2200,
+            0, 800, 2200,
+        ],
+
+        [
+            50, 0, 0,
+            550, 0, 0,
+            550, 50, 0,
+            50, 50, 0,
+            50, 0, 50,
+            550, 0, 50,
+            550, 50, 50,
+            50, 50, 50,
+        ],
+
+        [
+            550, 50, 0,
+            600, 50, 0,
+            600, 750, 0,
+            550, 750, 0,
+            550, 50, 50,
+            600, 50, 50,
+            600, 750, 50,
+            550, 750, 50,
+        ],
+
+        [
+            50, 750, 0,
+            550, 750, 0,
+            550, 800, 0,
+            50, 800, 0,
+            50, 750, 50,
+            550, 750, 50,
+            550, 800, 50,
+            50, 800, 50,
+        ],
+
+        [
+            0, 50, 0,
+            50, 50, 0,
+            50, 750, 0,
+            0, 750, 0,
+            0, 50, 50,
+            50, 50, 50,
+            50, 750, 50,
+            0, 750, 50,
+        ],
+
+        [
+            50, 0, 2150,
+            550, 0, 2150,
+            550, 50, 2150,
+            50, 50, 2150,
+            50, 0, 2200,
+            550, 0, 2200,
+            550, 50, 2200,
+            50, 50, 2200,
+        ],
+
+        [
+            550, 50, 2150,
+            600, 50, 2150,
+            600, 750, 2150,
+            550, 750, 2150,
+            550, 50, 2200,
+            600, 50, 2200,
+            600, 750, 2200,
+            550, 750, 2200,
+        ],
+
+        [
+            50, 750, 2150,
+            550, 750, 2150,
+            550, 800, 2150,
+            50, 800, 2150,
+            50, 750, 2200,
+            550, 750, 2200,
+            550, 800, 2200,
+            50, 800, 2200,
+        ],
+
+        [
+            0, 50, 2150,
+            50, 50, 2150,
+            50, 750, 2150,
+            0, 750, 2150,
+            0, 50, 2200,
+            50, 50, 2200,
+            50, 750, 2200,
+            0, 750, 2200,
+        ],
+
+        [
+            200, 0, 50,
+            250, 0, 50,
+            250, 50, 50,
+            200, 50, 50,
+            200, 0, 2150,
+            250, 0, 2150,
+            250, 50, 2150,
+            200, 50, 2150,
+        ],
+
+        [
+            200, 750, 50,
+            250, 750, 50,
+            250, 800, 50,
+            200, 800, 50,
+            200, 750, 2150,
+            250, 750, 2150,
+            250, 800, 2150,
+            200, 800, 2150,
+        ],
+
+        [
+            200, 50, 800,
+            250, 50, 800,
+            250, 750, 800,
+            200, 750, 800,
+            200, 50, 850,
+            250, 50, 850,
+            250, 750, 850,
+            200, 750, 850,
+        ],
+
+        [
+            200, 50, 1600,
+            250, 50, 1600,
+            250, 750, 1600,
+            200, 750, 1600,
+            200, 50, 1650,
+            250, 50, 1650,
+            250, 750, 1650,
+            200, 750, 1650,
+        ]
+        ]
+    </script>
+    <!-- 预先导入三维场景模块，导入算法模块 -->
+    <script src="../three.js-r154/build/three.js"></script>
+
+    <script type="importmap">
+            {
+                "imports": {
+                    "three": "../three.js-r154/build/three.module.js",
+              "three/addons/": "../three.js-r154/examples/jsm/"
+                }
+            }
+        </script>
+
+    <script type='module' src="rect_prt.js"></script>
+    <script type="module" src="AStar.js"></script>
+
+    <!-- 加载场景 -->
+    <script type="module">
+        //构建场景
+        import { createScene } from "./rect_prt.js";
+        createScene();
+    </script>
+
+</head>
+
+<body>
+    <!-- 左页面栏 -->
+    <div style="float: left; width:450px">
+        <h2>>>使用GDD标准柜体(推荐)</h2>
+
+        <span class="text mx-1 large primary">尺寸:800*600*2200</span>
+        <button id="useDefault">导入柜体</button></br></br>
+
+        <h2>>>构建柜体(自定义)</h2>
+        <form id="coordinateForm">
+            <span class="text mx-1 large primary">一、柜架名称:</span>
+            <input type="text" id="frameName" name="默认框架" required><br><br>
+
+            <span class="text mx-1 large primary">二、框架类型:</span>
+            <input type="text" id="typeName" name="默认类型" required><br><br>
+
+            <span class="text mx-1 large primary">三、柜架描述:</span>
+            <input type="text" id="frameDescription" name="框架描述" required><br><br>
+            <button id="saveInformation" class="mx-1">保存信息</button></br></br>
+
+            <span class="text mx-1 large primary">四、自定义坐标添加:(采用8点确定独立长方体构件)</span><br>
+
+
+            <label for="p1" class="mx-1">坐标1:</label>
+            <input type="text" id="p1" name="p1" required><br>
+
+            <label for="p2" class="mx-1">坐标2:</label>
+            <input type="text" id="p2" name="p2" required><br>
+
+            <label for="p3" class="mx-1">坐标3:</label>
+            <input type="text" id="p3" name="p3" required><br>
+
+            <label for="p4" class="mx-1">坐标4:</label>
+            <input type="text" id="p4" name="p4" required><br>
+
+            <label for="p5" class="mx-1">坐标5:</label>
+            <input type="text" id="p5" name="p5" required><br>
+
+            <label for="p6" class="mx-1">坐标6:</label>
+            <input type="text" id="p6" name="p6" required><br>
+
+            <label for="p7" class="mx-1">坐标7:</label>
+            <input type="text" id="p7" name="p7" required><br>
+
+            <label for="p8" class="mx-1">坐标8:</label>
+            <input type="text" id="p8" name="p8" required><br>
+
+            <button id="addRect" class="mx-1">添加构件</button>
+        </form>
+    </div>
+
+    <!-- 中页面栏 -->
+    <div style="float:left;width:450px">
+        <h2>>>构建路径</h2>
+        <label for="p1">钣金横截面尺寸：</label>
+        <input type="text" id="material_size" name="material_size" required><br><br>
+
+        <label for="p1">起点:</label>
+        <input type="text" id="startPoint" name="start" required><br><br>
+
+        <label for="p1">终点:</label>
+        <input type="text" id="endPoint" name="end" required><br><br>
+
+        <label for="p1">途径点:</label>
+        <input type="text" id="crossByPoint" name="crossByPoint" required><br><br>
+
+        <h2>>>生成路径</h2>
+        <button onclick="window.location.href='./createRect.html'" type="button" id="add">生成模型</button><br><br>
+
+        <h2>———————————————</h2>
+        <h2>>>模型测试</h2>
+        <span class="text large primary">使用前建议先使用模型测试检测软件是否正常运行</span><br>
+        <button onclick="window.location.href='./createRect.html'" type="button" id="add">模型测试</button>
+    </div>
+
+
+    <div id="createRect" style="float: left;">
+        <script type="module">
+            //调用createRect添加长方体构件
+            import { createRect } from "./rect_prt.js";
+
+            // 导入柜体
+            document.getElementById("useDefault").addEventListener("click", function () {
+                var i;
+                for (i = 0; i < positions.length; i++) {
+                    createRect(positions[i]);
+                }
+            })
+
+
+            //保存柜体信息
+            var frameName;
+            var typeName;
+            var frameDescription;
+            document.getElementById("saveInformation").addEventListener("click", function () {
+                frameName = document.getElementById("frameName").value;
+                typeName = document.getElementById("typeName").value;
+                frameDescription = document.getElementById("frameDescription").value;
+                console.log(frameName, typeName, frameDescription);
+            })
+
+            //添加构件
+            var p1, p2, p3, p4, p5, p6, p7, p8;
+            document.getElementById("addRect").addEventListener("click", function () {
+                p1 = document.getElementById("p1").value;
+                p2 = document.getElementById("p2").value;
+                p3 = document.getElementById("p3").value;
+                p4 = document.getElementById("p4").value;
+                p5 = document.getElementById("p5").value;
+                p6 = document.getElementById("p6").value;
+                p7 = document.getElementById("p7").value;
+                p8 = document.getElementById("p8").value;
+
+                //解析坐标字符串
+                var p1Coords = p1.substring(1, p1.length - 1).split(',').map(parseFloat);
+                var p2Coords = p2.substring(1, p2.length - 1).split(',').map(parseFloat);
+                var p3Coords = p3.substring(1, p3.length - 1).split(',').map(parseFloat);
+                var p4Coords = p4.substring(1, p4.length - 1).split(',').map(parseFloat);
+                var p5Coords = p5.substring(1, p5.length - 1).split(',').map(parseFloat);
+                var p6Coords = p6.substring(1, p6.length - 1).split(',').map(parseFloat);
+                var p7Coords = p7.substring(1, p7.length - 1).split(',').map(parseFloat);
+                var p8Coords = p8.substring(1, p8.length - 1).split(',').map(parseFloat);
+                var positionsArray = [p1Coords, p2Coords, p3Coords, p4Coords, p5Coords, p6Coords, p7Coords, p8Coords];
+
+                // for (var i = 0; i < 8; i++) {
+                //     console.log(positionsArray[i]);
+                // }
+
+                var tmpList = new Array();
+                for (var i = 0; i < 8; i++) {
+                    for (var j = 0; j < 3; j++) {
+                        tmpList.push(positionsArray[i][j]);
+                    }
+                }
+                createRect(tmpList);
+
+            })
+
+            //————————————————————————————————————————————————————————————————————————————————————————
+            // //根据起点，终点，途径点生成路径
+            // import { aStarFindPath } from "./AStar.js";
+            // //将三维路径投射到二维，这里选择x = 250的平面，不同情况下选择的投影面不同
+            // let x = 250;
+
+            // //path[]接收Astar算法返回的路径转折点
+            // let path = new Array();
+            // /* 
+            //     aStarFindPath(world_x, world_y, safeAngle, startPoint, endPoint, passByPoints)
+            //     world_x,world_y:将整个柜体投影到x = 250得到的边界尺寸
+            //     safeAngle:自定义安全的弯折度数
+            //     startPoint, endPoint, passByPoints:起点，终点，途径点
+            // */
+            // path = aStarFindPath(800, 2200, 90, [400, 825], [400, 1625], []);
+
+            // //按照一定算法将二维坐标换算成三维坐标
+            // let y1 = path[0][0], z1 = path[0][1], y2 = path[1][0], z2 = path[1][1];
+
+            // let path1 = [
+            //     x, y1 - 50, z1,
+            //     x + 20, y1 - 50, z1,
+            //     x + 20, y1 + 50, z1,
+            //     x, y1 + 50, z1,
+            //     x, y2 - 50, z2,
+            //     x + 20, y2 - 50, z2,
+            //     x + 20, y2 + 50, z2,
+            //     x, y2 + 50, z2,
+            // ]
+
+            // createRect(path1, 0x00FF00);
+            //——————————————————————————————————————————————————————————————————————————————————————————
+            import { aStarFindPath } from "./AStar.js";
+            var startPoint = [150, 400, 400];
+            var endPoint = [150, 400, 2000];
+            var passByPoint1 = [260, 400, 825];
+            var passByPoint2 = [260, 400, 1625];
+            var allPoints = [];
+            allPoints.push(startPoint);
+            allPoints.push(passByPoint1);
+            allPoints.push(passByPoint2);
+            allPoints.push(endPoint);
+
+            //定义投影方向属性projectionDirection
+            //x值相等->投影到yoz平面->值=0
+            //y值相等—xoz平面->1
+            //z值相等-xoy平面->2
+            var projectionDirection = 1;
+
+            //根据投影平面确定二维平面的边界大小
+            var world_x, world_y;
+            if (projectionDirection == 0) {
+                world_x = frame_y;
+                world_y = frame_z;
+            } else if (projectionDirection == 1) {
+                world_x = frame_x;
+                world_y = frame_z;
+            } else {
+                world_x = frame_x;
+                world_y = frame_y;
+            }
+
+            //设置安全转角
+            var safeAngle = 90;
+
+            //设置钣金宽度，厚度
+            var metalWidth = 100;
+            var metalThickness = 20;
+
+            //路径建模辅助参数，对两个中心点进行变换得到8组坐标，
+            //可用于生成从一个点到另一个点的钣金路径
+            var argList = [
+                [0, -metalWidth / 2, -metalThickness / 2],
+                [0, metalWidth / 2, -metalThickness / 2],
+                [0, -metalWidth / 2, metalThickness / 2],
+                [0, metalWidth / 2, metalThickness / 2]
+            ]
+
+
+            //每次对两个相邻的点之间进行寻路，point1、point2保存三维转二维的坐标
+            for (var i = 0; i < allPoints.length - 1; i++) {
+                var point1 = new Array();
+                var point2 = new Array();
+
+                for (var j = 0; j < 3; j++) {
+                    if (j != projectionDirection) {
+                        point1.push(allPoints[i][j]);
+                        point2.push(allPoints[i + 1][j]);
+                    }
+                }
+                var path = new Array();
+                /* 
+                    aStarFindPath(world_x, world_y, safeAngle, startPoint, endPoint, passByPoints)
+                    world_x,world_y:将整个柜体投影到x = 250得到的边界尺寸
+                    safeAngle:自定义安全的弯折度数
+                    startPoint, endPoint, passByPoints:起点，终点，途径点
+                */
+                path = aStarFindPath(world_x, world_y, safeAngle, point1, point2);
+                console.log(path);
+
+                //二维坐标转三维
+                for (var k = 0; k < path.length; k++) {
+                    path[k].splice(projectionDirection, 0, allPoints[0][projectionDirection]);
+                }
+
+                //解析坐标：通过两个中心点额外解析出8个点，分别对应着起点和终点的两个横截面
+                for (var k = 0; k < path.length - 1; k++) {
+                    //position保存用于生成路径的坐标组
+                    var position = [];
+                    //指针p
+                    var p = 0;
+
+                    var point1 = path[k];
+                    var point2 = path[k + 1];
+                    for (var n = 0; n < 4; n++) {
+                        if (p == 0) {
+                            for (var m = 0; m < 3; m++) {
+                                position.push(point1[m] + argList[n][m]);
+                            }
+                            for (var m = 0; m < 3; m++) {
+                                position.push(point2[m] + argList[n][m]);
+                            }
+                        } else {
+                            for (var m = 0; m < 3; m++) {
+                                position.push(point2[m] + argList[n][m]);
+                            }
+                            for (var m = 0; m < 3; m++) {
+                                position.push(point1[m] + argList[n][m]);
+                            }
+                        }
+                        p = !p;
+                    }
+                    createRect(position, 0x00FF00);
+                }
+
+            }
+
+
+
+        </script>
+    </div>
+
+</body>
+
+</html>
